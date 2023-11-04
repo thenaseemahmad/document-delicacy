@@ -1,0 +1,28 @@
+.header-main{
+    display: flex;
+    flex-direction: row;
+    height: 80;
+    width: auto;
+    margin: 10px 0px 10px 0px;
+}
+
+.logo-area{
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
+    margin-right: auto;
+}
+
+.buttons-area{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-self: flex-end;
+}
+
+button{
+    font-family: 'Inter', sans-serif;
+    font-size: medium;
+    border: none;
+    background: none;
+}

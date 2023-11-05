@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Header.css";
 import Logo from "../logo/Logo";
 import comimg from "../assets/companylogo.png"
+import About from "../about/About";
+
+function OnAboutButtonClick(){
+
+}
 
 function Header() {
     return (
-        <div className="header-main">
+        <div>
+            <div className="header-main">
             <div className="logo-area">
                 <Logo
                     imagelocation={comimg}
@@ -13,14 +19,14 @@ function Header() {
                 />
             </div>
             <div className="buttons-area">
-            <button type="button">Support-1</button>
-            <button type="button">Support-2</button>
-            <button type="button">Support-3</button>
-            <button type="button">Support-4</button>
-
+                <button onClick={OnAboutButtonClick} type="button" class="btn">About</button>
+                <button type="button" class="btn">Sign in</button>
             </div>
         </div>
+        <hr />
+        </div>
+
     );
 }
 
-export default Header
+export {Header}

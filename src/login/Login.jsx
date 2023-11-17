@@ -1,37 +1,22 @@
 import React, { useState } from "react";
-import mongoose from 'mongoose';
-import md5 from 'md5';
-import { Dbtrans } from "../db/Dbtrans";
+import SHA256 from 'crypto-js/sha256';
+import axios from "axios";
 
 function Login() {
     const [emailText, setEmailText] = useState("");
     const [passText, setPassText] = useState("");
 
-
-
-    function AuthenticateUser(email, password) {
-        const dbtrans = new Dbtrans("japsinnaseem","kxTEUsWXdQnSBVLT");
-        const userfound = dbtrans.authenticateAUser(email,password);
-        // mongoose.connect("mongodb+srv://" + process.env.MONGODB_USER + ":" + process.env.MONGODB_USER_PASS + "@cluster0.c9xlloe.mongodb.net/userDB?retryWrites=true&w=majority", { useNewUrlParser: true });
-        // mongoose.connect("mongodb+srv://japsinnaseem:kxTEUsWXdQnSBVLT@cluster0.c9xlloe.mongodb.net/userDB?retryWrites=true&w=majority", { useNewUrlParser: true });
-        // const userSchema = new mongoose.Schema({ username: String, password: String });
-        // const User = new mongoose.model('users', userSchema);
-        // User.findOne({username:email}).then((foundUser)=>{
-        //     if(foundUser){
-        //         if(foundUser.password===md5(password)){
-        //             return "user found"
-                    
-        //         }
-        //         else{
-        //             return "Wrong password"
-                    
-        //         }
-        //     }
-        //     else{
-        //         return "User does not exist, Please register"
-        //     }
-        // });
-    };
+    async function loginUser(fullname, email,pass) {
+        
+        //await axios.post('http://localhost:5000/registeruser',{params:{newuseremail:email,newuserpass:pass,fullname:fullname}},{headers:{'Access-Control-Allow-Origin': '*'}})
+        await axios.post('http://localhost:5000/registeruser?newuseremail='+email+'&newuserpass='+pass+'&fullname='+fullname)
+            .then(function(response){
+                console.log(response);
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+    }
 
     function handleEmailChange(event) {
         setEmailText(event.target.value);
@@ -43,7 +28,10 @@ function Login() {
 
     function handleLoginSubmitButton() {
         //Check if this user exist in db
-        AuthenticateUser(emailText,passText);
+        //AuthenticateUser(emailText,passText);
+        //Hit python backend server here to check if this user exist
+        //user axios to get this detail
+        loginUser('Naseem Ahmad',emailText,SHA256(passText));
 
     }
 

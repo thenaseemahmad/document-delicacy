@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import Header from './header/Header';
 import About from './about/About';
-import Login from './login/Login';
+import LoginAndRegister from './loginandregister/LoginAndRegister';
 
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
         loginBtnCallback={handleLoginBtnCallback}/>  
       </div>
       <div className='mid-body'>
-        {AboutPageorLoginPage()==='about' ? <About /> : <Login />}
+        {AboutPageorLoginPage()==='about' ? <About /> : <LoginAndRegister />}
       </div>
       <div className='footer'>
 

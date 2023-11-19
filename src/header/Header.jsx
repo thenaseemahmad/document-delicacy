@@ -26,7 +26,7 @@ function Header(props) {
                 </div>
                 <div className="buttons-area">
                     <button onClick={handleAboutBtnClick} type="button" className="btn">About</button>
-                    <button onClick={handleSigninBtnClick} type="button" className="btn">Sign in</button>
+                    <button onClick={handleSigninBtnClick} type="button" className="btn">Sign in/Register</button>
                 </div>
             </div>
             <hr />

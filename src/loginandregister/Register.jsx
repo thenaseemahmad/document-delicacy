@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./style.css"
+import "./style.css";
+import SHA256 from 'crypto-js/sha256';
 
 function Register(props) {
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
-    const [isSubmitButtonDisabled, setSubmitButtonDisabled] = useState(true);
+    const [regiterApiResponse, setRegisterApiResponse] = useState(null);
 
     function handleFullnameChange(event) {
         setFullName(event.target.value);
@@ -33,20 +34,23 @@ function Register(props) {
 
         }
         else {
-            registerUser(fullName, email, password)
+            const res = registerUser(fullName, email, password);
+            setRegisterApiResponse(res);
         }
+        console.log(regiterApiResponse)
+        console.log(regiterApiResponse)
 
     }
 
     async function registerUser(fullname, email, pass) {
         //axios.post supports params, and headers objects as well but due to some reason that is not working here
         //await axios.post('http://localhost:5000/registeruser',{params:{newuseremail:email,newuserpass:pass,fullname:fullname}},{headers:{'Access-Control-Allow-Origin': '*'}})
-        await axios.post('http://localhost:5000/registeruser?newuseremail=' + email + '&newuserpass=' + pass + '&fullname=' + fullname)
+        await axios.post('http://localhost:5000/registeruser?newuseremail=' + email + '&newuserpass=' + SHA256(pass) + '&fullname=' + fullname)
             .then(function (response) {
-                console.log(response);
+                return response;
             })
             .catch(function (error) {
-                console.log(error);
+                return error;
             })
     }
 

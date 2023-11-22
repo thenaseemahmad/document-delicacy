@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./style.css";
 import SHA256 from 'crypto-js/sha256';
@@ -8,8 +8,8 @@ function Register(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
-    const [regiterApiResponse, setRegisterApiResponse] = useState(null);
-
+    const [registerApiResponse, setRegisterApiResponse] = useState(null);
+    
     function handleFullnameChange(event) {
         setFullName(event.target.value);
     }
@@ -27,6 +27,25 @@ function Register(props) {
 
     }
 
+    //Handling side effect of registerApiResponse state change here
+    useEffect(()=>{
+        if(registerApiResponse!=null && registerApiResponse.status===200){
+            if(registerApiResponse.data.register_status==='success'){
+                //user registered successfully
+                //let user redirect to workspace
+            }
+            else if(registerApiResponse.data.register_status==='failed'){
+                //inform user that this user alredy exist
+                //and redirect user to login form
+            }            
+            console.log(registerApiResponse)
+        }
+        else{
+            //inform user that something is not working, and ask user to check back later
+        }
+        
+    },[registerApiResponse])
+
     function handleRegisterSubmitBtn() {
         //registerUser backend method here
         if ((password == null || password === '') || (confirmPass == null || confirmPass === '') || (password !== confirmPass)) {
@@ -34,23 +53,21 @@ function Register(props) {
 
         }
         else {
-            const res = registerUser(fullName, email, password);
-            setRegisterApiResponse(res);
+            registerUser(fullName, email, password,function(response){
+                setRegisterApiResponse(response)
+            });
         }
-        console.log(regiterApiResponse)
-        console.log(regiterApiResponse)
-
     }
 
-    async function registerUser(fullname, email, pass) {
+    async function registerUser(fullname, email, pass, fn) {
         //axios.post supports params, and headers objects as well but due to some reason that is not working here
         //await axios.post('http://localhost:5000/registeruser',{params:{newuseremail:email,newuserpass:pass,fullname:fullname}},{headers:{'Access-Control-Allow-Origin': '*'}})
         await axios.post('http://localhost:5000/registeruser?newuseremail=' + email + '&newuserpass=' + SHA256(pass) + '&fullname=' + fullname)
             .then(function (response) {
-                return response;
+                fn(response);
             })
             .catch(function (error) {
-                return error;
+                fn(error);
             })
     }
 

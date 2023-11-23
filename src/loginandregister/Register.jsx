@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./style.css";
 import SHA256 from 'crypto-js/sha256';
+import CustomButton from "../button/CustomButton";
+import InputField from "../inputfield/InputField";
 
 function Register(props) {
     const [fullName, setFullName] = useState('');
@@ -9,7 +11,26 @@ function Register(props) {
     const [password, setPassword] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
     const [registerApiResponse, setRegisterApiResponse] = useState(null);
-    
+
+    //Handling side effect of registerApiResponse state change here
+    useEffect(() => {
+        if (registerApiResponse != null && registerApiResponse.status === 200) {
+            if (registerApiResponse.data.register_status === 'success') {
+                //user registered successfully
+                //let user redirect to workspace
+            }
+            else if (registerApiResponse.data.register_status === 'failed') {
+                //inform user that this user alredy exist
+                //and redirect user to login form
+            }
+            console.log(registerApiResponse)
+        }
+        else {
+            //inform user that something is not working, and ask user to check back later
+        }
+
+    }, [registerApiResponse]);
+
     function handleFullnameChange(event) {
         setFullName(event.target.value);
     }
@@ -27,25 +48,6 @@ function Register(props) {
 
     }
 
-    //Handling side effect of registerApiResponse state change here
-    useEffect(()=>{
-        if(registerApiResponse!=null && registerApiResponse.status===200){
-            if(registerApiResponse.data.register_status==='success'){
-                //user registered successfully
-                //let user redirect to workspace
-            }
-            else if(registerApiResponse.data.register_status==='failed'){
-                //inform user that this user alredy exist
-                //and redirect user to login form
-            }            
-            console.log(registerApiResponse)
-        }
-        else{
-            //inform user that something is not working, and ask user to check back later
-        }
-        
-    },[registerApiResponse])
-
     function handleRegisterSubmitBtn() {
         //registerUser backend method here
         if ((password == null || password === '') || (confirmPass == null || confirmPass === '') || (password !== confirmPass)) {
@@ -53,7 +55,7 @@ function Register(props) {
 
         }
         else {
-            registerUser(fullName, email, password,function(response){
+            registerUser(fullName, email, password, function (response) {
                 setRegisterApiResponse(response)
             });
         }
@@ -73,26 +75,30 @@ function Register(props) {
 
     return (
         <div>
-            <div className="form-floating">
+            <InputField againstUserInsertAnyValue={handleFullnameChange} fieldType="fullname" classToApply="form-control" idToApply="floatingInput" placeholderToShow="Full Name" labelToApply="Full name" />
+            {/* <div className="form-floating">
                 <input onChange={handleFullnameChange} type="fullname" className="form-control" id="floatingInput" placeholder="Full Name" />
                 <label for="floatingInput">Full name</label>
-            </div>
+            </div> */}
 
-            <div className="form-floating">
+            <InputField againstUserInsertAnyValue={handleEmailChange} fieldType="email" classToApply="form-control" idToApply="floatingInput" placeholderToShow="name@example.com" labelToApply="Email address" />
+            {/* <div className="form-floating">
                 <input onChange={handleEmailChange} type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
                 <label for="floatingInput">Email address</label>
-            </div>
-
-            <div className="form-floating">
+            </div> */}
+            <InputField againstUserInsertAnyValue={handlePassChange} fieldType="password" classToApply="form-control" idToApply="floatingPassword" placeholderToShow="Password" labelToApply="Password" />
+            {/* <div className="form-floating">
                 <input onChange={handlePassChange} type="password" className="form-control" id="floatingPassword" placeholder="Password" />
                 <label for="floatingPassword">Password</label>
-            </div>
+            </div> */}
 
-            <div className="form-floating">
+            <InputField againstUserInsertAnyValue={handleConfirmPassChange} fieldType="password" classToApply="form-control" idToApply="floatingConfirmPassword" placeholderToShow="Confirm password" labelToApply="Confirm password" />
+            {/* <div className="form-floating">
                 <input onChange={handleConfirmPassChange} type="password" className="form-control" id="floatingConfirmPassword" placeholder="Confirm Password" />
                 <label for="floatingPassword">Confirm Password</label>
-            </div>
-            <button onClick={handleRegisterSubmitBtn} className="btn btn-primary w-100 py-2 mt-3" type="submit">Register</button>
+            </div> */}
+            <CustomButton onPressThisBtn={handleRegisterSubmitBtn} title="Register" classValue="btn btn-primary w-100 py-2 mt-3" type="submit" />
+            {/* <button onClick={handleRegisterSubmitBtn} className="btn btn-primary w-100 py-2 mt-3" type="submit">Register</button> */}
             <p className="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
         </div>
     );

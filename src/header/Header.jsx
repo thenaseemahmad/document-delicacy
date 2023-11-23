@@ -1,6 +1,7 @@
 import "./Header.css";
 import Logo from "../logo/Logo";
 import comimg from "../assets/companylogo.png"
+import CustomButton from "../button/CustomButton";
 
 function Header(props) {
     function handleAboutBtnClick(event) {
@@ -14,6 +15,7 @@ function Header(props) {
         props.aboutBtnCallback(false);
         event.preventDefault();
     }
+    
 
     return (
         <div>
@@ -25,8 +27,8 @@ function Header(props) {
                     />
                 </div>
                 <div className="buttons-area">
-                    <button onClick={handleAboutBtnClick} type="button" className="btn">About</button>
-                    <button onClick={handleSigninBtnClick} type="button" className="btn">Sign in/Register</button>
+                    <CustomButton onPressThisBtn={handleAboutBtnClick} title="About" classValue="btn" type="button"/>
+                    <CustomButton onPressThisBtn={handleSigninBtnClick} classValue="btn" title="Sign in/Register" type="button"/>
                 </div>
             </div>
             <hr />

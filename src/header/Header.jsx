@@ -3,22 +3,9 @@ import Logo from "../logo/Logo";
 import comimg from "../assets/companylogo.png"
 import CustomButton from "../button/CustomButton";
 
-function Header(props) {
-    function handleAboutBtnClick(event) {
-        props.aboutBtnCallback(true);
-        props.loginBtnCallback(false);
-        event.preventDefault();
-    }
-
-    function handleSigninBtnClick(event) {
-        props.loginBtnCallback(true);
-        props.aboutBtnCallback(false);
-        event.preventDefault();
-    }
-    
-
+function Header({handleAboutBtnClick,handleSigninBtnClick}) {
     return (
-        <div>
+        <>
             <div className="header-main">
                 <div className="logo-area">
                     <Logo
@@ -27,13 +14,14 @@ function Header(props) {
                     />
                 </div>
                 <div className="buttons-area">
-                    <CustomButton onPressThisBtn={handleAboutBtnClick} title="About" classValue="btn" type="button"/>
-                    <CustomButton onPressThisBtn={handleSigninBtnClick} classValue="btn" title="Sign in/Register" type="button"/>
+                    <CustomButton onClick={handleAboutBtnClick} title="About" className="btn" type="button"/>
+                    {/* If user is not logged in then show this button */}
+                    <CustomButton onClick={handleSigninBtnClick} className="btn" title="Sign in/Register" type="button"/>
+                    {/* Else show this users profile manager */}
+
                 </div>
             </div>
-            <hr />
-        </div>
-
+        </>
     );
 }
 

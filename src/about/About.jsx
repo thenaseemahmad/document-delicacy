@@ -2,9 +2,10 @@ import React from "react";
 
 function About(){
     return (
-        <div>
+        <>
             <h1>This is about page here</h1>
-        </div>
+            <p className="fs-1 fw-bold">This is the sample para</p>
+        </>
     );
 }
 

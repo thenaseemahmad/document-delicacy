@@ -1,12 +1,8 @@
 import React from "react";
 
-export default function CustomButton(props){
+export default function CustomButton({title, ...props}){
     return (
-        <button 
-        onClick={props.onPressThisBtn} 
-        type={props.type} 
-        className={props.classValue}>{props.title}
-        </button>
+        <button {...props}>{title}</button>
     );
     
 }

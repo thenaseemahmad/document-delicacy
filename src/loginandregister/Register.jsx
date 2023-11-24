@@ -5,7 +5,7 @@ import SHA256 from 'crypto-js/sha256';
 import CustomButton from "../button/CustomButton";
 import InputField from "../inputfield/InputField";
 
-function Register(props) {
+function Register({userRegisteredSuccessfully}) {
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,6 +17,7 @@ function Register(props) {
         if (registerApiResponse != null && registerApiResponse.status === 200) {
             if (registerApiResponse.data.register_status === 'success') {
                 //user registered successfully
+                userRegisteredSuccessfully(true);
                 //let user redirect to workspace
             }
             else if (registerApiResponse.data.register_status === 'failed') {
@@ -76,29 +77,10 @@ function Register(props) {
     return (
         <div>
             <InputField againstUserInsertAnyValue={handleFullnameChange} fieldType="fullname" classToApply="form-control" idToApply="floatingInput" placeholderToShow="Full Name" labelToApply="Full name" />
-            {/* <div className="form-floating">
-                <input onChange={handleFullnameChange} type="fullname" className="form-control" id="floatingInput" placeholder="Full Name" />
-                <label for="floatingInput">Full name</label>
-            </div> */}
-
             <InputField againstUserInsertAnyValue={handleEmailChange} fieldType="email" classToApply="form-control" idToApply="floatingInput" placeholderToShow="name@example.com" labelToApply="Email address" />
-            {/* <div className="form-floating">
-                <input onChange={handleEmailChange} type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
-                <label for="floatingInput">Email address</label>
-            </div> */}
             <InputField againstUserInsertAnyValue={handlePassChange} fieldType="password" classToApply="form-control" idToApply="floatingPassword" placeholderToShow="Password" labelToApply="Password" />
-            {/* <div className="form-floating">
-                <input onChange={handlePassChange} type="password" className="form-control" id="floatingPassword" placeholder="Password" />
-                <label for="floatingPassword">Password</label>
-            </div> */}
-
             <InputField againstUserInsertAnyValue={handleConfirmPassChange} fieldType="password" classToApply="form-control" idToApply="floatingConfirmPassword" placeholderToShow="Confirm password" labelToApply="Confirm password" />
-            {/* <div className="form-floating">
-                <input onChange={handleConfirmPassChange} type="password" className="form-control" id="floatingConfirmPassword" placeholder="Confirm Password" />
-                <label for="floatingPassword">Confirm Password</label>
-            </div> */}
-            <CustomButton onPressThisBtn={handleRegisterSubmitBtn} title="Register" classValue="btn btn-primary w-100 py-2 mt-3" type="submit" />
-            {/* <button onClick={handleRegisterSubmitBtn} className="btn btn-primary w-100 py-2 mt-3" type="submit">Register</button> */}
+            <CustomButton onClick={handleRegisterSubmitBtn} title="Register" className="btn btn-primary w-100 py-2 mt-3" type="submit" />
             <p className="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
         </div>
     );

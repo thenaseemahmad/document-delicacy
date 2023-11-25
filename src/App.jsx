@@ -9,7 +9,7 @@ import UserWorkspace from './userworkspace/UserWorkspace';
 function App() {
 
   const [selectedHeaderButton, setSelectedHeaderButton] = useState('about');
-  const [userLoginFlag, setUserLoginflag] = useState('false');
+  const [userLoginFlag, setUserLoginflag] = useState(true);
   let aVariable = <LoginAndRegister userLoginStatusFlag={whetherUserLogin}/>;
   if(userLoginFlag===true){
     aVariable = <UserWorkspace />

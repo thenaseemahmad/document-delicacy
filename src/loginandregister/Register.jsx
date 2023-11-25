@@ -75,14 +75,14 @@ function Register({userRegisteredSuccessfully}) {
     }
 
     return (
-        <div>
+        <>
             <InputField againstUserInsertAnyValue={handleFullnameChange} fieldType="fullname" classToApply="form-control" idToApply="floatingInput" placeholderToShow="Full Name" labelToApply="Full name" />
             <InputField againstUserInsertAnyValue={handleEmailChange} fieldType="email" classToApply="form-control" idToApply="floatingInput" placeholderToShow="name@example.com" labelToApply="Email address" />
             <InputField againstUserInsertAnyValue={handlePassChange} fieldType="password" classToApply="form-control" idToApply="floatingPassword" placeholderToShow="Password" labelToApply="Password" />
             <InputField againstUserInsertAnyValue={handleConfirmPassChange} fieldType="password" classToApply="form-control" idToApply="floatingConfirmPassword" placeholderToShow="Confirm password" labelToApply="Confirm password" />
             <CustomButton onClick={handleRegisterSubmitBtn} title="Register" className="btn btn-primary w-100 py-2 mt-3" type="submit" />
             <p className="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
-        </div>
+        </>
     );
 }
 

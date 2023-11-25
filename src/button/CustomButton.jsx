@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function CustomButton({title, ...props}){
+export default function CustomButton({children, ...props}){
     return (
-        <button {...props}>{title}</button>
+        <button {...props}>{children}</button>
     );
     
 }

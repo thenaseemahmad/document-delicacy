@@ -14,9 +14,9 @@ function Header({handleAboutBtnClick,handleSigninBtnClick}) {
                     />
                 </div>
                 <div className="buttons-area">
-                    <CustomButton onClick={handleAboutBtnClick} title="About" className="btn" type="button"/>
+                    <CustomButton onClick={handleAboutBtnClick} className="btn rounded-0" type="button">About</CustomButton>
                     {/* If user is not logged in then show this button */}
-                    <CustomButton onClick={handleSigninBtnClick} className="btn" title="Sign in/Register" type="button"/>
+                    <CustomButton onClick={handleSigninBtnClick} className="btn rounded-0" type="button">Sign in/Register</CustomButton>
                     {/* Else show this users profile manager */}
 
                 </div>

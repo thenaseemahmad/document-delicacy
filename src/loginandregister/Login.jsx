@@ -37,7 +37,7 @@ export default function Login({userLoginSuccessfully}) {
         <>
             <InputField againstUserInsertAnyValue={handleEmailChange} fieldType="email" classToApply="form-control" idToApply="floatingInput" placeholderToShow="name@example.com" labelToApply="Email address" />
             <InputField againstUserInsertAnyValue={handlePassChange} fieldType="password" classToApply="form-control" idToApply="floatingPassword" placeholderToShow="Password" labelToApply="Password" />
-            <CustomButton onClick={handleLoginSubmitButtonClick} title="Sign in" className="btn btn-primary w-100 py-2 mt-3" type="submit" />
+            <CustomButton onClick={handleLoginSubmitButtonClick} title="Sign in" className="btn btn-primary w-100 py-2 mt-3" type="submit">Login</CustomButton>
             
             <p className="mt-5 mb-3 text-body-secondary">© 2017–2023</p>
         </>

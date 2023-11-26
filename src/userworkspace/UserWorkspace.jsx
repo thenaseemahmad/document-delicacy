@@ -1,28 +1,28 @@
 import React, { useState } from "react"
-import "./UserWorkspace.css"
-import LeftPane from "./LeftPane"
+import LeftPane from "./leftpane/LeftPane"
+import RightPane from "./rightpane/RightPane";
 
 
 export default function UserWorkspace() {
-    const [leftWorkspaceArea, setLeftWorkspaceArea] = useState(null);
-        function getBtnValuePressedOnLeftPane(btnPressed){
-            setLeftWorkspaceArea(btnPressed);
-        }
+    const [btnPressedOnLeftPane, setBtnPressedOnLeftPane] = useState(null);
+    function getBtnValuePressedOnLeftPane(btnPressed) {
+        setBtnPressedOnLeftPane(btnPressed);
+    }
     return (
         // user workspace will be divided into two section 
         // Left pane 
         // right workspace
-        
         <>
-            <div className="d-inline-flex flex-row column-gap-2 h-100">
+            <div className="d-inline-flex flex-row h-100 w-100">
                 {/* this is left pane div */}
                 <LeftPane leftPanePressedBtnValue={getBtnValuePressedOnLeftPane}></LeftPane>
-
-
                 {/* this is workspace area here */}
-                <div className="d-flex flex-column shadow">
+                <RightPane SubpaneToShow={btnPressedOnLeftPane}></RightPane>
+                {/* Home area */}
+                {/* Create and train new model */}
+                {/* User's creted model here */}
+                {/* Help center */}
 
-                </div>
             </div>
         </>
     )

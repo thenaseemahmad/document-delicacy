@@ -9,8 +9,8 @@ export default function LoginAndRegister({userLoginStatusFlag}) {
     return (
     <main className="form-signin w-100 m-auto">
         <div className="d-flex flex-row justify-content-center">
-            <CustomButton onClick={()=>{setSignInBtn(true)}} title="Sign in" className="btn w-100" type="button" />
-            <CustomButton onClick={()=>{setSignInBtn(false)}} title="Register" className="btn w-100" type="button" />
+            <CustomButton onClick={()=>{setSignInBtn(true)}} className="btn w-100" type="button">Sign in</CustomButton>
+            <CustomButton onClick={()=>{setSignInBtn(false)}} className="btn w-100" type="button">Register</CustomButton>
         </div>
         {/* Conditional Login or Register window here */}
         {signInBtn ? <Login userLoginSuccessfully={userLoginStatusFlag} /> : <Register userRegisteredSuccessfully={userLoginStatusFlag} /> }

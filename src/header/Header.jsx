@@ -7,7 +7,7 @@ function Header({handleAboutBtnClick,handleSigninBtnClick}) {
     return (
         <>
             <div className="header-main">
-                <div className="logo-area">
+                <div className="logo-area ms-3">
                     <Logo
                         imagelocation={comimg}
                         logoheight="30px"

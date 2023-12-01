@@ -1,6 +1,8 @@
 import React from "react";
 import CustomButton from "../../button/CustomButton";
 import Icon from "../../icon/Icon";
+import "./LeftPane.css"
+
 
 export default function LeftPane({leftPanePressedBtnValue}) {
     // const [getClickedBtn, setGetClickedBtn] = useState(null);
@@ -10,7 +12,7 @@ export default function LeftPane({leftPanePressedBtnValue}) {
     }
     return (
         // up14fl4577
-        <div className="d-flex flex-column shadow-sm">
+        <div id="leftpane">
             <ul className="nav flex-column justify-content-start">
                 <li className="nav-item">
                     <CustomButton onClick={()=>{handleButtonClick("home")}} type="button" className="btn rounded-0">

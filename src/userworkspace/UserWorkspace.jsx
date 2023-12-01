@@ -13,7 +13,7 @@ export default function UserWorkspace() {
         // Left pane 
         // right workspace
         <>
-            <div className="d-inline-flex flex-row h-100 w-100">
+            <div className="d-flex flex-row h-auto w-100">
                 {/* this is left pane div */}
                 <LeftPane leftPanePressedBtnValue={getBtnValuePressedOnLeftPane}></LeftPane>
                 {/* this is workspace area here */}

@@ -9,10 +9,10 @@ import UserWorkspace from './userworkspace/UserWorkspace';
 function App() {
 
   const [selectedHeaderButton, setSelectedHeaderButton] = useState('about');
-  const [userLoginFlag, setUserLoginflag] = useState(false);
-  let aVariable = <LoginAndRegister userLoginStatusFlag={whetherUserLogin}/>;
+  const [userLoginFlag, setUserLoginflag] = useState(true);
+  let loginorworkspace = <LoginAndRegister userLoginStatusFlag={whetherUserLogin}/>;
   if(userLoginFlag===true){
-    aVariable = <UserWorkspace />
+    loginorworkspace = <UserWorkspace />
   }
   
   function handleABtnOnHeader(btnClicked){
@@ -32,7 +32,7 @@ function App() {
       <div className='mid-body'>
         {/* If this user is not loggedin then execute this */}
         {/* {selectedHeaderButton === 'about' ? <About /> : <LoginAndRegister userLoginStatusFlag={whetherUserLogin}/>} */}
-        {selectedHeaderButton === 'about' ? <About /> : aVariable}
+        {selectedHeaderButton === 'about' ? <About /> : loginorworkspace}
         {/* Else excute this */}
         {/* Show workspace with left pane and right workspace here */}
       </div>

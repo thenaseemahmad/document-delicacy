@@ -1,14 +1,14 @@
 body {
     /* background: rgb(34,193,195);
     background: linear-gradient(0deg, rgba(34,193,195,1) 9%, rgba(253,187,45,1) 73%); */
-    height: 100%;
-}
-#root{
     height: 100vh;
+}
+
+#root{
+    height: 100%;
 }
 .app{
     height: 100%;
-    width: 100%;
 }
 .mid-body
 {height: 100%;

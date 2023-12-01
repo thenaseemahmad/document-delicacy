@@ -3,6 +3,7 @@ import HomeSubPane from "./HomeSubPane";
 import CreateNewModel from "./CreateNewModel";
 import MyModelsPane from "./MyModelsPane";
 import HelpPane from "./HelpPane";
+import "./RightPane.css"
 
 export default function RightPane({ SubpaneToShow }) {
     let paneToShowOnRight = null;
@@ -25,7 +26,7 @@ export default function RightPane({ SubpaneToShow }) {
         paneToShowOnRight = <HomeSubPane></HomeSubPane>
     }
     return (
-        <div className="shadow flex-grow-1">
+        <div className="shadow-sm" id="rightpane">
             {paneToShowOnRight}
         </div>
 

@@ -3,7 +3,7 @@ import axios from "axios";
 import "./style.css";
 import SHA256 from 'crypto-js/sha256';
 import CustomButton from "../button/CustomButton";
-import InputField from "../inputfield/InputField";
+import InputField from "../inputfield/InputTextField";
 
 function Register({userRegisteredSuccessfully}) {
     const [fullName, setFullName] = useState('');

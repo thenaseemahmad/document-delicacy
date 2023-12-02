@@ -1,10 +1,11 @@
 import React from "react";
 import Card from "./Card";
 
-export default function CardGroup({ cards, buttonPressedOnWhichCard }) {
-    
+export default function CardGroup({ cards, selectedCard }) {
+    //const [cardsGroupState, setCardsGroupState] = useState(cards);
+    //setCardsGroupState(cards);
     function handleCardBtnClick(cardName) {
-        buttonPressedOnWhichCard(cardName);
+        selectedCard(cardName);
     }
     return (
         <div class="row align-items-start">
@@ -19,6 +20,5 @@ export default function CardGroup({ cards, buttonPressedOnWhichCard }) {
                 );
             })}
         </div>
-
     );
 }

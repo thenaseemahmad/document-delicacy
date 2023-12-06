@@ -1,0 +1,17 @@
+#demo-material-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+#left-container{
+    flex-grow: 5;
+    flex-shrink: 8;
+}
+
+#right-container{
+    flex-grow: 2;
+    flex-shrink: 2;
+}

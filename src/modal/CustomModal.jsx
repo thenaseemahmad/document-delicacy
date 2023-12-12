@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import sampleInvoice from "../assets/sampleInvoice.jpg";
 
-export default function CustomModal({ handleCloseBtn, handleCreateButton }) {
+export default function CustomModal({ handleCloseBtn, returnModelTypeToCreate }) {
     const [sampleImageHeight, setSampleImageHeight] = useState();
     function handleZoomin() {
         var currentHeight = sampleImageHeight - 10;
@@ -10,10 +10,13 @@ export default function CustomModal({ handleCloseBtn, handleCreateButton }) {
     function handleZoomout() {
         setSampleImageHeight(sampleImageHeight - 10)
     }
+    function handleCreateButton(modelType){
+        returnModelTypeToCreate(modelType)
+    }
     return (
-        <div className="modal fade show" id="exampleModalXl" tabindex="-1" aria-labelledby="exampleModalXlLabel" style={{ display: "block" }} aria-modal="true" role="dialog">
+        <div className="modal fade show shadow-lg" id="exampleModalXl" tabindex="-1" aria-labelledby="exampleModalXlLabel" style={{ display: "block" }} aria-modal="true" role="dialog">
             <div className="modal-dialog modal-xl">
-                <div className="modal-content">
+                <div className="modal-content shadow-lg ">
                     <div className="modal-header">
                         <h1 className="modal-title fs-4" id="exampleModalXlLabel">Extract data from Invoices</h1>
                         <button onClick={handleCloseBtn} type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -26,8 +29,8 @@ export default function CustomModal({ handleCloseBtn, handleCreateButton }) {
                             </div>
                         </div>
                         {/* Sample invoice pane */}
-                        <div className="row">
-                            <div className="col-8 bg-light rounded-4">
+                        <div className="row ps-2 pe-2">
+                            <div className="col-8 bg-light border">
                                 <div className="row">
                                     <div className="col text-center">
                                         {/* Zoomin and zoomout buttons here */}
@@ -51,9 +54,9 @@ export default function CustomModal({ handleCloseBtn, handleCreateButton }) {
                                         </div>
                                         <hr />
                                     </div>
-                                </div>                                
+                                </div>
                                 <div className="row justify-content-start">
-                                    <div className="col position-relative">                                        
+                                    <div className="col position-relative">
                                         <img src={sampleInvoice} style={{ transform: "scale(.95)" }} className="img-fluid overflow-auto mx-2 top-0 start-0" alt="sample-invoice" />
                                     </div>
                                 </div>
@@ -61,20 +64,39 @@ export default function CustomModal({ handleCloseBtn, handleCreateButton }) {
 
 
                             </div>
-                            <div className="col-4 bg-light rounded-4">
+                            <div className="col-4 bg-light border p-3">
                                 <div className="row">
-                                    <div className="col"></div>
-                                    <p>This is a</p>
+                                    <div className="col text">
+                                        <h5>Extracted data</h5>
+                                    </div>
                                 </div>
-
+                                <hr />
+                                <div className="d-flex flex-column">
+                                <div className="p-1">
+                                        <h6 className="bg-primary-subtle rounded-2 p-1">Vendor name</h6>
+                                        <p className="ps-1">"Zylker Electronics H"</p>
+                                    </div>
+                                    <div className="p-1">
+                                        <h6 className="bg-primary-subtle rounded-2 p-1">Invoice number</h6>
+                                        <p className="ps-1">"INV-000003"</p>
+                                    </div>
+                                    <div className="p-1">
+                                        <h6 className="bg-primary-subtle rounded-2 p-1">Invoice date</h6>
+                                        <p className="ps-1">"18 May 2023"</p>
+                                    </div>
+                                    <div className="p-1">
+                                        <h6 className="bg-primary-subtle rounded-2 p-1">Sub total</h6>
+                                        <p className="ps-1">"$2,027.00"</p>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
 
                         {/* Create model buttons on button right corner */}
                         <div className="row">
-                            <div className="col">
-                                <button onClick={handleCreateButton} className="btn btn-primary my-2">Create Model</button>
+                            <div className="col ps-2">
+                                <button onClick={()=>{handleCreateButton("invoiceprocess")}} className="btn btn-primary my-2 rounded-0">Create Model</button>
                             </div>
                         </div>
                     </div>

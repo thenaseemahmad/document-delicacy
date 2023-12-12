@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import ButtonsGroup from "../../buttonsgroup/ButtonsGroup";
 import CardGroup from "../../card/CardGroup";
-import sampleInvoice from "../../assets/sampleInvoice.jpg";
-import CustomButton from "../../button/CustomButton"
 import { DocumentsModelsDetail, TextModelsDetail, StructuredDataModelsDetail } from "./cardgroupsbasedata/AvailableCardTypes";
 import CustomModal from "../../modal/CustomModal";
 
 
-export default function HomeSubPane() {
+export default function HomeSubPane({returnTypeOfModelSelectedToTrain}) {
     const [cardsToShow, setCardsToShow] = useState(DocumentsModelsDetail);
     const [modelScreenToShow, setModelScreenToShow] = useState(null);
     function handleTypeOfModelBtnClick(btnPressed) {
@@ -42,10 +40,13 @@ export default function HomeSubPane() {
             setModelScreenToShow(
                 <CustomModal
                     handleCloseBtn={handleCloseBtnOfThisModel}
-                    handleCreateButton={handleCreateModelButton}
+                    returnModelTypeToCreate={typeOfModelToCreate}
                 />
             )
 
+        }
+        else{
+            alert("The selected model will be available in next release");
         }
     }
 
@@ -53,8 +54,12 @@ export default function HomeSubPane() {
         setModelScreenToShow(null);
     }
 
-    function handleCreateModelButton() {
-
+    function typeOfModelToCreate(modelType) {
+        returnTypeOfModelSelectedToTrain(modelType);
+        if(modelType==="invoiceprocess"){
+            //this will redirect user to home screen to showcare the initial requirement to create and train the model
+            
+        }
     }
 
     return (

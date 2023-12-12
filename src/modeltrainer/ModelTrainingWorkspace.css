@@ -1,0 +1,60 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.bottom-mainarea {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.model-nameandsavebtnarea {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#model-name {
+    border: 0px;
+}
+
+.model-informationarea {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    height: 100%;
+    border: 1px solid #ccc;
+}
+
+.model-leftpane {
+    flex-grow: 7;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    padding: 10px;
+}
+
+.left-upper{
+    margin-bottom: auto;
+}
+
+.model-rightpane {
+    flex-grow: 3;
+    height: 100%;
+    min-width: 200px;
+    max-width: 300px;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+#tableforfields{
+    width: 300px;
+    margin-top: 20px;
+}
+
+.customwithbtn{
+    width: 120px;
+}

@@ -1,43 +1,39 @@
 // this component will be used everytime user wants to train a newly created/selected model or wants
 // to make any change in earlier created model.
 
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import "./ModelTrainingWorkspace.css"
-import EntityTableComp from "./EntityTableComp";
+import ProgressBar from "./ProgressBar";
+import EntitiesWorkArea from "./EntitiesWorkArea";
 
-export const ListOfEntitiesForThisModel = ["Invoice No", "Invoice Date", "Invoice Amount"];
+
+
 export default function ModelTrainingWorkspace({ handleSaveAndCloseButton }) {
+  const [trainingState, setTrainingState] = useState(25);
+  let ListOfEntitiesForThisModel = [];
+  function handleNextButton(){
+    setTrainingState(trainingState=>trainingState+25)
+  }
+  function handleBackButton(){
+    setTrainingState(trainingState=>trainingState-25)
+  }
+  
+  let deactivateBack =false;
+  let deactivateNext =false;
+  if(trainingState===25){
+    deactivateBack = true;
+    deactivateNext =false;
+  }
+  else if(trainingState===100){
+    deactivateBack = false;
+    deactivateNext =true;
+  }
+
   
   return (
     <div className="main-container">
-      <div className="top-progressbar ps-2 pe-2 pt-0">
-        <div className="progress mb-1" role="progressbar" aria-label="Example 1px high" aria-valuenow="25" aria-valuemin="0"
-          aria-valuemax="100" style={{ height: "1.5px" }}>
-          <div className="progress-bar bg-success" style={{ width: "25%" }}></div>
-        </div>
 
-        <div className="progress-stacked">
-          <div className="progress" role="progressbar" aria-label="Segment one" aria-valuenow="15" aria-valuemin="0"
-            aria-valuemax="100" style={{ width: "25%" }}>
-            <div className="progress-bar bg-secondary">Entities to extract</div>
-          </div>
-          <div className="vr bg-white"></div>
-          <div className="progress" role="progressbar" aria-label="Segment two" aria-valuenow="30" aria-valuemin="0"
-            aria-valuemax="100" style={{ width: "25%" }}>
-            <div className="progress-bar bg-dark-subtle">Create buckets</div>
-          </div>
-          <div className="vr bg-white"></div>
-          <div className="progress" role="progressbar" aria-label="Segment three" aria-valuenow="20" aria-valuemin="0"
-            aria-valuemax="100" style={{ width: "25%" }}>
-            <div className="progress-bar bg-dark-subtle">Tag Entities</div>
-          </div>
-          <div className="vr bg-white"></div>
-          <div className="progress" role="progressbar" aria-label="Segment three" aria-valuenow="20" aria-valuemin="0"
-            aria-valuemax="100" style={{ width: "25%" }}>
-            <div className="progress-bar bg-dark-subtle">Model training</div>
-          </div>
-        </div>
-      </div>
+      <ProgressBar currentState={trainingState}/>
 
       <div className="bottom-mainarea">
         <div className="model-nameandsavebtnarea my-1">
@@ -49,14 +45,12 @@ export default function ModelTrainingWorkspace({ handleSaveAndCloseButton }) {
         <div className="model-informationarea">
           <div className="model-leftpane">
             <div className="left-upper">
-              <h4>Choose information to extract</h4>
-              <p>List all the data pieces that you want AI model to extract from the document.</p>
-              <hr />
-              <EntityTableComp existingEntitiesListForThisModel={ListOfEntitiesForThisModel}/>
+              <EntitiesWorkArea currentState={trainingState} savedEntitiesForThisModel={ListOfEntitiesForThisModel} />
             </div>
             <div className="left-bottom">
               <hr />
-              <button type="button" className="customwithbtn btn btn-primary rounded-0">Next</button>
+              <button onClick={handleBackButton} type="button" className="customwithbtn btn btn-primary rounded-0 me-2" disabled={deactivateBack} >Back</button>
+              <button onClick={handleNextButton} type="button" className="customwithbtn btn btn-primary rounded-0 ms-2" disabled={deactivateNext}>Next</button>
             </div>
 
           </div>

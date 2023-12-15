@@ -11,6 +11,7 @@ import EntitiesWorkArea from "./EntitiesWorkArea";
 export default function ModelTrainingWorkspace({ handleSaveAndCloseButton }) {
   const [trainingState, setTrainingState] = useState(25);
   let ListOfEntitiesForThisModel = [];
+  let ListOfCollectionsForThisModel=[];
   function handleNextButton(){
     setTrainingState(trainingState=>trainingState+25)
   }
@@ -45,7 +46,7 @@ export default function ModelTrainingWorkspace({ handleSaveAndCloseButton }) {
         <div className="model-informationarea">
           <div className="model-leftpane">
             <div className="left-upper">
-              <EntitiesWorkArea currentState={trainingState} savedEntitiesForThisModel={ListOfEntitiesForThisModel} />
+              <EntitiesWorkArea currentState={trainingState} savedEntitiesForThisModel={ListOfEntitiesForThisModel} savedCollectionsForThisModel={ListOfCollectionsForThisModel}/>
             </div>
             <div className="left-bottom">
               <hr />

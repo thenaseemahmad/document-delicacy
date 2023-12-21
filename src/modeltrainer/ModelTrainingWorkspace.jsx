@@ -1,52 +1,52 @@
-// this component will be used everytime user wants to train a newly created/selected model or wants
-// to make any change in earlier created model.
-
 import React, { useState } from "react";
-import "./ModelTrainingWorkspace.css"
+import "./ModelTrainingWorkspace.css";
 import ProgressBar from "./ProgressBar";
 import EntitiesWorkArea from "./EntitiesWorkArea";
 
 
 
-export default function ModelTrainingWorkspace({ handleSaveAndCloseButton }) {
+export default function ModelTrainingWorkspace({ handleSaveAndCloseButton, detailOfTheModelToTrain }) {
   const [trainingState, setTrainingState] = useState(25);
   let ListOfEntitiesForThisModel = [];
-  let ListOfCollectionsForThisModel=[];
-  function handleNextButton(){
-    setTrainingState(trainingState=>trainingState+25)
-  }
-  function handleBackButton(){
-    setTrainingState(trainingState=>trainingState-25)
-  }
+  let ListOfCollectionsForThisModel = [];
+  ListOfEntitiesForThisModel = detailOfTheModelToTrain.listOfEntities;
+  ListOfCollectionsForThisModel=detailOfTheModelToTrain.listOfCollection;
   
-  let deactivateBack =false;
-  let deactivateNext =false;
-  if(trainingState===25){
-    deactivateBack = true;
-    deactivateNext =false;
+  function handleNextButton() {
+    setTrainingState(trainingState => trainingState + 25);
   }
-  else if(trainingState===100){
-    deactivateBack = false;
-    deactivateNext =true;
+  function handleBackButton() {
+    setTrainingState(trainingState => trainingState - 25);
   }
 
-  
+  let deactivateBack = false;
+  let deactivateNext = false;
+  if (trainingState === 25) {
+    deactivateBack = true;
+    deactivateNext = false;
+  }
+  else if (trainingState === 100) {
+    deactivateBack = false;
+    deactivateNext = true;
+  }
+
+
   return (
     <div className="main-container">
 
-      <ProgressBar currentState={trainingState}/>
+      <ProgressBar currentState={trainingState} />
 
       <div className="bottom-mainarea">
         <div className="model-nameandsavebtnarea my-1">
           <button onClick={handleSaveAndCloseButton} type="button" className="btn btn-light ms-2 bg-transparent rounded-0">Save and close</button>
           <div className="vr"></div>
-          <input id="model-name" className="me-2 border" type="text" name="modelname" placeholder="Name of the model here" />
+          <input id="model-name" className="me-2 border" type="text" name="modelname" value={detailOfTheModelToTrain.modelname} placeholder="Name of the model here" />
         </div>
 
         <div className="model-informationarea">
           <div className="model-leftpane">
             <div className="left-upper">
-              <EntitiesWorkArea currentState={trainingState} savedEntitiesForThisModel={ListOfEntitiesForThisModel} savedCollectionsForThisModel={ListOfCollectionsForThisModel}/>
+              <EntitiesWorkArea currentState={trainingState} savedEntitiesForThisModel={ListOfEntitiesForThisModel} savedCollectionsForThisModel={ListOfCollectionsForThisModel} />
             </div>
             <div className="left-bottom">
               <hr />

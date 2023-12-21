@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import sampleInvoice from "../assets/sampleInvoice.jpg";
 
-export default function CustomModal({ handleCloseBtn, returnModelTypeToCreate }) {
+export default function CustomModal({ handleCloseBtn, returnModelDetail }) {
     const [sampleImageHeight, setSampleImageHeight] = useState();
     function handleZoomin() {
         var currentHeight = sampleImageHeight - 10;
@@ -10,8 +10,8 @@ export default function CustomModal({ handleCloseBtn, returnModelTypeToCreate })
     function handleZoomout() {
         setSampleImageHeight(sampleImageHeight - 10)
     }
-    function handleCreateButton(modelType){
-        returnModelTypeToCreate(modelType)
+    function handleCreateButton(modelDetail){
+        returnModelDetail(modelDetail);
     }
     return (
         <div className="modal fade show shadow-lg" id="exampleModalXl" tabindex="-1" aria-labelledby="exampleModalXlLabel" style={{ display: "block" }} aria-modal="true" role="dialog">
@@ -92,11 +92,9 @@ export default function CustomModal({ handleCloseBtn, returnModelTypeToCreate })
                             </div>
 
                         </div>
-
-                        {/* Create model buttons on button right corner */}
                         <div className="row">
                             <div className="col ps-2">
-                                <button onClick={()=>{handleCreateButton("invoiceprocess")}} className="btn btn-primary my-2 rounded-0">Create Model</button>
+                                <button onClick={()=>{handleCreateButton({listOfEntities:[], listOfCollection:[], modelCreatedBy:'naseem.ahmad@gmail.com', modelOwners:['naseem.ahmad@gmail.com'], modelname:new Date(), modeltype:'Inovoice processing', createdon:new Date(),modifiedon:new Date()})}} className="btn btn-primary my-2 rounded-0">Create Model</button>
                             </div>
                         </div>
                     </div>

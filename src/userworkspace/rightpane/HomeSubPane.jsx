@@ -5,7 +5,7 @@ import { DocumentsModelsDetail, TextModelsDetail, StructuredDataModelsDetail } f
 import CustomModal from "../../modal/CustomModal";
 
 
-export default function HomeSubPane({returnTypeOfModelSelectedToTrain}) {
+export default function HomeSubPane({returnDetailOfModelSelectedToTrain}) {
     const [cardsToShow, setCardsToShow] = useState(DocumentsModelsDetail);
     const [modelScreenToShow, setModelScreenToShow] = useState(null);
     function handleTypeOfModelBtnClick(btnPressed) {
@@ -40,7 +40,7 @@ export default function HomeSubPane({returnTypeOfModelSelectedToTrain}) {
             setModelScreenToShow(
                 <CustomModal
                     handleCloseBtn={handleCloseBtnOfThisModel}
-                    returnModelTypeToCreate={typeOfModelToCreate}
+                    returnModelDetail={getModelDetailThatUserWantsToCreate}
                 />
             )
 
@@ -54,12 +54,8 @@ export default function HomeSubPane({returnTypeOfModelSelectedToTrain}) {
         setModelScreenToShow(null);
     }
 
-    function typeOfModelToCreate(modelType) {
-        returnTypeOfModelSelectedToTrain(modelType);
-        if(modelType==="invoiceprocess"){
-            //this will redirect user to home screen to showcare the initial requirement to create and train the model
-            
-        }
+    function getModelDetailThatUserWantsToCreate(modelDetail) {
+        returnDetailOfModelSelectedToTrain(modelDetail);
     }
 
     return (

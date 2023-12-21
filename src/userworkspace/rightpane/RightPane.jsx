@@ -5,15 +5,14 @@ import MyModelsPane from "./MyModelsPane";
 import HelpPane from "./HelpPane";
 import "./RightPane.css"
 
-export default function RightPane({ SubpaneToShow, returnTypeOfModelToEdit }) {
+export default function RightPane({ SubpaneToShow, returnDetailOfModelToEdit }) {
     let paneToShowOnRight = null;
-    function getNameOfTheModelToCrete(modelName) {
-        // console.log(modelName);
-        returnTypeOfModelToEdit(modelName)
+    function getDetailOfTheModelToCrete(modelDetail) {
+        returnDetailOfModelToEdit(modelDetail)
     }
 
     if (SubpaneToShow === "home") {
-        paneToShowOnRight = <HomeSubPane returnTypeOfModelSelectedToTrain={getNameOfTheModelToCrete}/>
+        paneToShowOnRight = <HomeSubPane returnDetailOfModelSelectedToTrain={getDetailOfTheModelToCrete}/>
     }
     else if (SubpaneToShow === "create") {
         paneToShowOnRight = <CreateNewModel></CreateNewModel>

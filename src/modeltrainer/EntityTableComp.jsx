@@ -10,7 +10,7 @@ export default function EntityTableComp({existingEntitiesListForThisModel}) {
     
     function callbackGatherNewEntityName(newEntityName) {
         setEntityList(entityList=>[...entityList,newEntityName]);
-        entityList.filter(function(){return true})
+        //entityList.filter(function(){return true})
     }
     return (
         <>

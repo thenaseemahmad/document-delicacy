@@ -11,38 +11,34 @@ function App() {
 
   const [selectedHeaderButton, setSelectedHeaderButton] = useState('about');
   const [userLoginFlag, setUserLoginflag] = useState(true);
-  const [editModelScreen, setEditModelScreen] = useState(null);
+  const [modelDetailToEdit, setModelDetailToEdit] = useState(null);
   let screenToShow = <About />;
-  // let loginorworkspace = <LoginAndRegister userLoginStatusFlag={whetherUserLogin}/>;
-  // if(userLoginFlag===true){
-  //   loginorworkspace = <UserWorkspace returnModelNameToEditifAny={callbackGetNameOfTheModel}/>
-  // }
-  if(selectedHeaderButton==="about" && userLoginFlag===false && editModelScreen===null){
+  
+  if(selectedHeaderButton==="about" && userLoginFlag===false && modelDetailToEdit===null){
     screenToShow = <About />;
   }
-  else if(selectedHeaderButton==="registerorlogin" && userLoginFlag===false && editModelScreen===null){
+  else if(selectedHeaderButton==="registerorlogin" && userLoginFlag===false && modelDetailToEdit===null){
     // ask user to either login or register
     screenToShow = <LoginAndRegister userLoginStatusFlag={whetherUserLogin}/>;
   }
-  else if((selectedHeaderButton==="registerorlogin" || selectedHeaderButton==="about" ) && userLoginFlag===true && editModelScreen===null){
-    screenToShow = <UserWorkspace returnModelNameToEditifAny={callbackGetNameOfTheModel}/>
+  else if((selectedHeaderButton==="registerorlogin" || selectedHeaderButton==="about" ) && userLoginFlag===true && modelDetailToEdit===null){
+    screenToShow = <UserWorkspace returnModelDetailToEditifAny={callbackGetDetailOfTheModel}/>
   }
-  else if ((selectedHeaderButton==="registerorlogin" || selectedHeaderButton==="about" ) && userLoginFlag===true && editModelScreen==="invoiceprocess"){
-    screenToShow = <ModelTrainingWorkspace handleSaveAndCloseButton={handleSaveAndCloseOfCurrentModel}/>
+  else if ((selectedHeaderButton==="registerorlogin" || selectedHeaderButton==="about" ) && userLoginFlag===true && modelDetailToEdit.modeltype==='Inovoice processing'){
+    screenToShow = <ModelTrainingWorkspace handleSaveAndCloseButton={handleSaveAndCloseOfCurrentModel} detailOfTheModelToTrain={modelDetailToEdit}/>
   }
 
   function handleSaveAndCloseOfCurrentModel(){
-    setEditModelScreen(null);
+    setModelDetailToEdit(null);
   }
   
 
-  function callbackGetNameOfTheModel(modelName){
-    console.log(modelName)
-    if (modelName===undefined || modelName===null){
+  function callbackGetDetailOfTheModel(modelDetail){
+    if (modelDetail.modeltype===undefined || modelDetail.modeltype===null){
       // follow the normal path to login or register
     }
-    else if(modelName==="invoiceprocess"){
-      setEditModelScreen("invoiceprocess")
+    else if(modelDetail.modeltype==='Inovoice processing'){
+      setModelDetailToEdit(modelDetail)
     }
   }
   
@@ -61,8 +57,6 @@ function App() {
         <hr />
       </div>
       <div className='mid-body'>
-        {/* Show this screen until user did not select create a model */}
-        {/* {selectedHeaderButton === 'about' ? <About /> : loginorworkspace}*/}
         {screenToShow}
       </div>
       <div className='footer'>

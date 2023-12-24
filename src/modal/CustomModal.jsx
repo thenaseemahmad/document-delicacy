@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import sampleInvoice from "../assets/sampleInvoice.jpg";
+import { createNewModel } from "../backendcomp/BackendComp";
 
 export default function CustomModal({ handleCloseBtn, returnModelDetail }) {
     const [sampleImageHeight, setSampleImageHeight] = useState();
@@ -10,8 +11,22 @@ export default function CustomModal({ handleCloseBtn, returnModelDetail }) {
     function handleZoomout() {
         setSampleImageHeight(sampleImageHeight - 10)
     }
-    function handleCreateButton(modelDetail){
-        returnModelDetail(modelDetail);
+    function handleCreateButton(modelDetail){        
+        //Create a new model object in database
+        createNewModel(modelDetail.modelCreatedBy,modelDetail.modelName,modelDetail.modelType,modelDetail.modelCreatedBy,function(returnDetail){
+            //console.log(returnDetail);
+            console.log({...returnDetail.data,list_of_entities:[],list_of_collections:[]})
+            if(returnDetail.status===200){
+                //Get all the entities for this model
+                //Get all the collections for this model
+                //This method will always be called via new model requests, so spreading listOfEntities, and listOfCollections
+                returnModelDetail({...returnDetail.data,list_of_entities:[],list_of_collections:[]});
+            }
+            else{
+                alert("Something is not right. Please try again later!")
+            }
+            
+        })
     }
     return (
         <div className="modal fade show shadow-lg" id="exampleModalXl" tabindex="-1" aria-labelledby="exampleModalXlLabel" style={{ display: "block" }} aria-modal="true" role="dialog">
@@ -94,7 +109,7 @@ export default function CustomModal({ handleCloseBtn, returnModelDetail }) {
                         </div>
                         <div className="row">
                             <div className="col ps-2">
-                                <button onClick={()=>{handleCreateButton({listOfEntities:[], listOfCollection:[], modelCreatedBy:'naseem.ahmad@gmail.com', modelOwners:['naseem.ahmad@gmail.com'], modelname:new Date(), modeltype:'Inovoice processing', createdon:new Date(),modifiedon:new Date()})}} className="btn btn-primary my-2 rounded-0">Create Model</button>
+                                <button onClick={()=>{handleCreateButton({ modelCreatedBy:'naseem.ahmad@gmail.com', modelOwners:['naseem.ahmad@gmail.com'], modelName:new Date(), modelType:'Inovoice processing', createdOn:new Date(),modifiedOn:new Date()})}} className="btn btn-primary my-2 rounded-0">Create Model</button>
                             </div>
                         </div>
                     </div>

@@ -2,16 +2,20 @@ import React, { useState } from "react";
 import "./ModelTrainingWorkspace.css";
 import ProgressBar from "./ProgressBar";
 import EntitiesWorkArea from "./EntitiesWorkArea";
+import { renameModel } from "../backendcomp/BackendComp";
 
 
 
 export default function ModelTrainingWorkspace({ handleSaveAndCloseButton, detailOfTheModelToTrain }) {
   const [trainingState, setTrainingState] = useState(25);
-  let ListOfEntitiesForThisModel = [];
-  let ListOfCollectionsForThisModel = [];
-  ListOfEntitiesForThisModel = detailOfTheModelToTrain.listOfEntities;
-  ListOfCollectionsForThisModel=detailOfTheModelToTrain.listOfCollection;
-  
+  const [modelName, setModelName] = useState(detailOfTheModelToTrain.model_name)
+
+  let typingTimer;                //timer identifier
+  let doneTypingInterval = 5000;  //time in ms (5 seconds)
+
+  let ListOfEntitiesForThisModel = detailOfTheModelToTrain.list_of_entities;
+  let ListOfCollectionsForThisModel = detailOfTheModelToTrain.list_of_collections;
+
   function handleNextButton() {
     setTrainingState(trainingState => trainingState + 25);
   }
@@ -31,6 +35,26 @@ export default function ModelTrainingWorkspace({ handleSaveAndCloseButton, detai
   }
 
 
+  function doneTyping() {
+
+    renameModel(detailOfTheModelToTrain._id, modelName, function (renameStatus) {
+      console.log(renameStatus);
+      if(renameStatus.status===200){
+        //inform user that the rename has been done successfully
+      }
+      else{
+        //Show the existing name to the user and raise an exception intimation to prod support team
+      }
+    })
+  }
+
+  function handleKeyupOnModelName() {
+    clearTimeout(typingTimer);
+    if (modelName) {
+      typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    }
+  }
+
   return (
     <div className="main-container">
 
@@ -40,13 +64,13 @@ export default function ModelTrainingWorkspace({ handleSaveAndCloseButton, detai
         <div className="model-nameandsavebtnarea my-1">
           <button onClick={handleSaveAndCloseButton} type="button" className="btn btn-light ms-2 bg-transparent rounded-0">Save and close</button>
           <div className="vr"></div>
-          <input id="model-name" className="me-2 border" type="text" name="modelname" value={detailOfTheModelToTrain.modelname} placeholder="Name of the model here" />
+          <input onKeyUp={handleKeyupOnModelName} onChange={(e) => { setModelName(e.target.value) }} id="model-name" className="me-2 border" type="text" name="modelname" value={modelName} placeholder="Name of the model here" />
         </div>
 
         <div className="model-informationarea">
           <div className="model-leftpane">
             <div className="left-upper">
-              <EntitiesWorkArea currentState={trainingState} savedEntitiesForThisModel={ListOfEntitiesForThisModel} savedCollectionsForThisModel={ListOfCollectionsForThisModel} />
+              <EntitiesWorkArea modelDetail={detailOfTheModelToTrain} currentState={trainingState} savedEntitiesForThisModel={ListOfEntitiesForThisModel} savedCollectionsForThisModel={ListOfCollectionsForThisModel} />
             </div>
             <div className="left-bottom">
               <hr />

@@ -1,23 +1,33 @@
 import React, { useState } from "react";
 import EntityTableComp from "./EntityTableComp";
 import NewEntityAddComp from "./NewEntityAddComp";
+import { createNewCollection } from "../backendcomp/BackendComp";
 
-export function EntitiesNamingComp({ savedEntitiesForThisModel }) {
+export function EntitiesNamingComp({ modelDetail, savedEntitiesForThisModel }) {
     return (
         <>
             <h4>Choose information to extract</h4>
             <p>List all the data pieces that you want AI model to extract from the document.</p>
             <hr />
-            <EntityTableComp existingEntitiesListForThisModel={savedEntitiesForThisModel} />
+            <EntityTableComp modelDetail={modelDetail} existingEntitiesListForThisModel={savedEntitiesForThisModel} />
         </>
     );
 }
 
-export function EntitiesCollectionComp({ savedCollectionsForThisModel }) {
+export function EntitiesCollectionComp({ modelDetail, savedCollectionsForThisModel }) {
     const [collectionName, setCollectionName] = useState(savedCollectionsForThisModel);
     const [fileUploadModal, setFileUploadModal] = useState(null);
     function callbackGetNewCollectionName(collName) {
-        setCollectionName(currentItems => [collName, ...currentItems]);
+        createNewCollection(modelDetail._id, collName, function (apiResponse) {
+            if (apiResponse.status === 200) {
+                setCollectionName(currentItems => [collName, ...currentItems]);
+            }
+            else{
+                alert('Collection can not be added at this time. Please try again later');
+                //Raise exception for prod support team.
+            }
+        })
+        
     }
 
     function handleCloseButtonOnUploadModal() {

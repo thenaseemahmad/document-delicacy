@@ -26,7 +26,7 @@ export default function RightPane({ SubpaneToShow, returnDetailOfModelToEdit }) 
         paneToShowOnRight = <HelpPane></HelpPane>
     }
     else {
-        paneToShowOnRight = <HomeSubPane></HomeSubPane>
+        paneToShowOnRight = <HomeSubPane returnDetailOfModelSelectedToTrain={getDetailOfTheModelToCrete}></HomeSubPane>
     }
     return (
         <div className="shadow-sm" id="rightpane">

@@ -24,7 +24,7 @@ function App() {
   else if((selectedHeaderButton==="registerorlogin" || selectedHeaderButton==="about" ) && userLoginFlag===true && modelDetailToEdit===null){
     screenToShow = <UserWorkspace returnModelDetailToEditifAny={callbackGetDetailOfTheModel}/>
   }
-  else if ((selectedHeaderButton==="registerorlogin" || selectedHeaderButton==="about" ) && userLoginFlag===true && modelDetailToEdit.modeltype==='Inovoice processing'){
+  else if ((selectedHeaderButton==="registerorlogin" || selectedHeaderButton==="about" ) && userLoginFlag===true && modelDetailToEdit.model_type==='Inovoice processing'){
     screenToShow = <ModelTrainingWorkspace handleSaveAndCloseButton={handleSaveAndCloseOfCurrentModel} detailOfTheModelToTrain={modelDetailToEdit}/>
   }
 
@@ -34,10 +34,10 @@ function App() {
   
 
   function callbackGetDetailOfTheModel(modelDetail){
-    if (modelDetail.modeltype===undefined || modelDetail.modeltype===null){
+    if (modelDetail.model_type===undefined || modelDetail.model_type===null){
       // follow the normal path to login or register
     }
-    else if(modelDetail.modeltype==='Inovoice processing'){
+    else if(modelDetail.model_type==='Inovoice processing'){
       setModelDetailToEdit(modelDetail)
     }
   }

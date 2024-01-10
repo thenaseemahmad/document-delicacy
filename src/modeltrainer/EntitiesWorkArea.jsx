@@ -1,10 +1,11 @@
 import React from "react";
 import { EntitiesCollectionComp, EntitiesNamingComp, EntitiesTaggingComp, EntitiesTrainingComp } from "./EntitiesNamingComp";
 
-export default function EntitiesWorkArea({modelDetail, currentState, savedEntitiesForThisModel, savedCollectionsForThisModel }) {
+export default function EntitiesWorkArea({ modelDetail, currentState, savedEntitiesForThisModel, savedCollectionsForThisModel }) {
+    
     let screenToShow = <EntitiesNamingComp modelDetail={modelDetail} savedEntitiesForThisModel={savedEntitiesForThisModel} />;
     if (currentState === 25) {
-
+        screenToShow = <EntitiesNamingComp modelDetail={modelDetail} savedEntitiesForThisModel={savedEntitiesForThisModel} />;
     }
     else if (currentState === 50) {
         //Get the list of all entities created by user and update existing entity object detail in mongodb or create new mongodb entity object

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EntityTableComp from "./EntityTableComp";
 import NewEntityAddComp from "./NewEntityAddComp";
-import { createNewCollection } from "../backendcomp/BackendComp";
+import { createNewCollection, getCollections} from "../backendcomp/BackendComp";
+import DocumentUploader from "./trainingdocuploadsidetray/DocumentUploader";
 
 export function EntitiesNamingComp({ modelDetail, savedEntitiesForThisModel }) {
     return (
@@ -15,69 +16,41 @@ export function EntitiesNamingComp({ modelDetail, savedEntitiesForThisModel }) {
 }
 
 export function EntitiesCollectionComp({ modelDetail, savedCollectionsForThisModel }) {
-    const [collectionName, setCollectionName] = useState(savedCollectionsForThisModel);
+    const [collectionsForThisModel, setCollectionsForThisModel] = useState(savedCollectionsForThisModel);
     const [fileUploadModal, setFileUploadModal] = useState(null);
+
+    useEffect(()=>{
+        //fetch existing collections for this model
+        getCollections(modelDetail._id,function(apiResponse){
+            if(apiResponse.status===200){
+                setCollectionsForThisModel(apiResponse.data);
+            }
+            else{
+                alert('Unable to perform this action at the moment, Please try again later!')
+            }
+        })
+    },[]);
+
     function callbackGetNewCollectionName(collName) {
         createNewCollection(modelDetail._id, collName, function (apiResponse) {
             if (apiResponse.status === 200) {
-                setCollectionName(currentItems => [collName, ...currentItems]);
+                setCollectionsForThisModel(currentItems => [apiResponse.data, ...currentItems]);
             }
-            else{
+            else {
                 alert('Collection can not be added at this time. Please try again later');
                 //Raise exception for prod support team.
             }
         })
-        
     }
 
     function handleCloseButtonOnUploadModal() {
         setFileUploadModal(null);
     }
-    function handleAddButtonToAddDocsToThisColl(collectionName, modelName) {
-        //Open the file wizard and let user select the files to upload to this user
-        //Update the json object accordingly
 
-    }
-
-    function handleClickOnCollectionTile(collName) {
+    function handleClickOnCollectionTile(collObj) {  
         setFileUploadModal(
-            <div style={{ width: "600px" }} class="offcanvas offcanvas-end show border" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" aria-modal="true" role="dialog">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasRightLabel">{collName}</h5>
-                    <button onClick={handleCloseButtonOnUploadModal} type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <hr className="m-0" />
-                <div class="offcanvas-body">
-                    <button onClick={() => { handleAddButtonToAddDocsToThisColl(collName, "ModelNameHere") }} className="btn rounded-0 px-1">+ Add documents</button>
-                    <hr className="mb-1" />
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Sr</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Upload date</th>
-                                <th scope="col">Size</th>
-                            </tr>
-                        </thead>
-                        <tbody className="fw-lighter">
-                            <tr className="added-pdf-docs">
-                                <td>1</td>
-                                <td className="text-truncate" style={{ maxWidth: "150px" }}>Invoice_OCR_POL_WPP00024985_20230511081517332414917.pdf</td>
-                                <td>23rd Dec, 2023</td>
-                                <td>3.6MB</td>
-                            </tr>
-                            <tr className="added-pdf-docs">
-                                <td>2</td>
-                                <td className="text-truncate" style={{ maxWidth: "150px" }}>Invoice_OCR_POL_WPP00024985_20230511081517332414917.pdf</td>
-                                <td>23rd Dec, 2023</td>
-                                <td>3.6MB</td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>);
-
+            <DocumentUploader collDetail={collObj} modelDetail={modelDetail} handleCloseButtonOnUploadModal={handleCloseButtonOnUploadModal}/>
+        );              
     }
     return (
         <>
@@ -86,15 +59,15 @@ export function EntitiesCollectionComp({ modelDetail, savedCollectionsForThisMod
             <hr />
             <NewEntityAddComp returnNewEntity={callbackGetNewCollectionName} placeholderText="New collection name" />
             <div style={{ marginTop: "20px", display: "flex", flexDirection: "row", gap: "10px", flexWrap: "wrap", height: "250px", overflowY: "scroll" }}>
-                {collectionName.map((item) => {
+                {collectionsForThisModel.map((selectedCollectionObj) => {
                     return (
                         // https://www.filestack.com/fileschool/react/react-file-upload/
-                        <div onClick={() => { handleClickOnCollectionTile(item) }} class="card" style={{ height: "15rem", width: "15rem", cursor: "pointer" }}>
-                            <div class="m-2">
-                                <img style={{ width: "15rem", height: "150px", overflow: "hidden" }} src="https://marketplace.canva.com/EAETpJ0lmjg/2/0/1131w/canva-fashion-invoice-in-beige-black-minimalist-style-zvoLwRH8Wys.jpg" class="img-fluid" alt="..." />
+                        <div onClick={() => { handleClickOnCollectionTile(selectedCollectionObj) }} className="card" style={{ height: "15rem", width: "15rem", cursor: "pointer" }}>
+                            <div className="m-2">
+                                <img style={{ width: "15rem", height: "150px", overflow: "hidden" }} src="https://marketplace.canva.com/EAETpJ0lmjg/2/0/1131w/canva-fashion-invoice-in-beige-black-minimalist-style-zvoLwRH8Wys.jpg" className="img-fluid" alt="..." />
                             </div>
-                            <div class="card-body">
-                                <h6 class="card-title">{item}</h6>
+                            <div className="card-body">
+                                <h6 className="card-title">{selectedCollectionObj.collection_name}</h6>
                                 <p className="fw-lighter">7 documents</p>
                             </div>
                         </div>

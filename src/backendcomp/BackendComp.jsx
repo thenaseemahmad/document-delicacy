@@ -1,4 +1,3 @@
-import React from "react";
 import axios from "axios";
 
 //Register a new user with username and password
@@ -71,6 +70,17 @@ export async function createNewEntity(modelId, entityName, returnStatus) {
         })
 }
 
+//get entities of a model
+export async function getEntities(modelId, callbackResponse){
+    await axios.get('http://localhost:5000/getentities?modelid='+modelId)
+    .then(function(response){
+        callbackResponse(response);
+    })
+    .catch(function(error){
+        callbackResponse(error);
+    })
+}
+
 //Create a new collection | Update a given collection | Remove/Delete a collection
 // {collId:'', modelName:'', collName:''}
 export async function createNewCollection(modelId, collectionName, returnStatus) {
@@ -83,14 +93,43 @@ export async function createNewCollection(modelId, collectionName, returnStatus)
         })
 }
 
+export async function getCollections(modelId, callbackResponse){
+    await axios.get('http://localhost:5000/getcollections?modelid='+modelId)
+    .then(function(response){
+        callbackResponse(response)
+    })
+    .catch(function(error){
+        callbackResponse(error);
+    })
+}
+
 //Add a new document | Update a given name | Remove/Delete a document
 // {docId:'', coll:'collId', docName:'', docSize:'', docContent:''}
-export async function uploadNewDoc(collName,docName,docSize,docContent, returnStatus) {
-    await axios.post('http://localhost:5000/uploaddocument?&collectionname='+collName+'&docname='+docName+'&docsize='+docSize+'&doccontent='+docContent)
+export async function uploadTrainingDocs(files,collectionId, returnStatus) {
+    const formData = new FormData();
+    files.forEach((file,index)=>{
+        formData.append(`file${index}`, file);
+    });
+    const config = {
+        headers: {
+            "content-type": "multipart/form-data",
+        },
+    };
+    await axios.post('http://localhost:5000/uploadtrainingfiles?collectionid='+collectionId+'&userid=eea1b2f292814777b94aa21d1a3dfaba',formData,config)
         .then(function (response) {
             returnStatus(response);
         })
         .catch(function (error) {
             returnStatus(error);
         })
+}
+
+export async function getTrainingDocs(collectionId,returnResponse){
+    await axios.get('http://localhost:5000/gettrainingfiles?collectionid='+collectionId)
+    .then(function(response){
+        returnResponse(response)
+    })
+    .catch(function(error){
+        returnResponse(error)
+    })
 }
